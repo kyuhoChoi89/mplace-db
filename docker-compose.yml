@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+  db_mysql:
+    build:
+      context: ./mysql
+      dockerfile: ./mysql.Dockerfile
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mysql_secret
+      MYSQL_PASSWORD_FILE: /run/secrets/mysql_secret
+      MYSQL_DATABASE: mplace
+    secrets:
+      - mysql_secret
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./mysql/scripts:/docker-entrypoint-initdb.d/"
+    container_name: mplace_mysql
+
+secrets:
+  mysql_secret:
+    file: mysql_secret
+
+volumes:
+  mysql_data:

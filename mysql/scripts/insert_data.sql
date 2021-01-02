@@ -1,0 +1,1 @@
+INSERT INTO USER (login_id, password) VALUES ('test', 'password');
